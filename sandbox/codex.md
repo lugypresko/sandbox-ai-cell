@@ -39,16 +39,19 @@ CODEX must preserve the following structure at a minimum:
 |-- Dockerfile.sandbox
 |-- Dockerfile.engine
 |-- .pre-commit-config.yaml
+|-- RELEASE_NOTES.md
 |-- .github/
 |   |-- workflows/
 |       |-- markdown-hygiene.yml
 |-- sandbox/
+|   |-- otel-config.yaml
 |   |-- CONTRACT.md
 |   |-- DECISION_MODEL.md
 |   |-- POLICY.md
 |   |-- SYSTEM.md
 |   |-- MONITORS.md
 |-- src/
+|   |-- sandbox_app/
 |-- tests/
 
 CODEX must not:

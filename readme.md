@@ -21,7 +21,7 @@ Alerts either stay silent -- or become noise.
 This sandbox exists to answer a single question:
 
 > Can an AI system demonstrate **operational judgment**  
-> in the same ambiguous conditions where humans usually hesitate'
+> in the same ambiguous conditions where humans usually hesitate?
 
 ---
 
@@ -101,7 +101,11 @@ This sandbox earns it.
 Start here:
 - `sandbox/CONTRACT.md` -- non-negotiable boundaries
 - `sandbox/DECISION_MODEL.md` -- how decisions are formed
-- `SANDBOX_REALITY_DEFINITION.md` -- what "realistic" means here
+- `sandbox/SYSTEM.md` -- operating system and invariants
+- `sandbox/SUCCESS_NARRATIVE.md` -- demo success storyline
+
+Release notes:
+- `RELEASE_NOTES.md`
 
 If you disagree with the approach but understand the intent,
 the sandbox is doing its job.
