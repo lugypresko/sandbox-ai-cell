@@ -1,0 +1,179 @@
+# governance/autonomy/execution_contract.yaml
+
+version: "0.1"
+name: Autonomous Execution Contract
+status: active
+
+purpose: >
+  Define what the system is authorized to decide, fix, revert,
+  and advance autonomously toward DoD without human approval,
+  while remaining fully constrained by Governance.
+
+# -------------------------------------------------------------------
+# 1. Scope of Autonomous Authority
+# -------------------------------------------------------------------
+
+autonomous_scope:
+
+  allowed_changes:
+    - governance/behavior/**
+    - governance/autonomy/**
+    - src/governance/**
+    - tests/**
+    - .github/workflows/**
+
+  forbidden_changes:
+    - src/engine/**
+    - src/models/**
+    - production/**
+    - production_config/**
+    - runtime_decision_logic/**
+    - infrastructure/**
+    - data/**
+
+# -------------------------------------------------------------------
+# 2. No-Ask Zones (asking = failure)
+# -------------------------------------------------------------------
+
+no_ask_zones:
+
+  auto_revert:
+    - README.md
+    - sandbox.md
+    - DEMO_SCENARIOS.md
+    - "*.md outside governance/**"
+
+  auto_delete:
+    - typo_directories:
+        levenshtein_distance_max: 2
+
+  auto_ignore:
+    - formatting_only_changes
+    - whitespace_only_diffs
+
+# -------------------------------------------------------------------
+# 3. Noise Classification
+# -------------------------------------------------------------------
+
+noise_rules:
+
+  noise_if:
+    - single_line_change_in_markdown
+    - filename_contains_typo
+    - duplicate_documentation
+    - unused_files_detected
+
+  action_on_noise:
+    - auto_revert
+    - auto_delete
+    - auto_correct
+
+# -------------------------------------------------------------------
+# 4. Autonomous Actions
+# -------------------------------------------------------------------
+
+auto_actions:
+
+  permitted:
+    - revert_unplanned_changes
+    - delete_obvious_typos
+    - split_commits_by_scope
+    - continue_execution_to_next_stage
+    - mark_stage_complete
+
+  forbidden:
+    - modify_runtime_logic
+    - weaken_governance_rules
+    - bypass_validation
+    - silence_governance_violation
+
+# -------------------------------------------------------------------
+# 5. Escalation Rules (Human Required)
+# -------------------------------------------------------------------
+
+escalation_required_if:
+
+  - change_touches_forbidden_scope
+  - governance_violation_detected
+  - ambiguity_level > 0.6
+  - conflicting_contracts_detected
+  - irreversible_action_required
+
+# -------------------------------------------------------------------
+# 6. Autonomy State Machine
+# -------------------------------------------------------------------
+
+autonomy_states:
+
+  AUTO_EXECUTE:
+    description: >
+      Proceed without asking. All changes within allowed scope.
+
+  AUTO_CORRECT:
+    description: >
+      Fix or revert noise without escalation.
+
+  AUTO_REVERT:
+    description: >
+      Undo forbidden or unplanned changes automatically.
+
+  ESCALATE:
+    description: >
+      Stop execution and request human decision.
+
+# -------------------------------------------------------------------
+# 7. DoD Progression Model
+# -------------------------------------------------------------------
+
+dod_stages:
+
+  - name: governance_present
+    description: Governance contract exists and is valid.
+    auto_complete: true
+
+  - name: enforcement_present
+    description: Governance enforcement exists and is tested.
+    auto_complete: true
+
+  - name: runtime_connected
+    description: Governance adapter connected to runtime FSM.
+    requires_human: true
+
+  - name: production_safe
+    description: Human-approved production readiness.
+    requires_human: true
+
+# -------------------------------------------------------------------
+# 8. Authority Rules
+# -------------------------------------------------------------------
+
+authority:
+
+  governance_precedence: absolute
+  autonomy_cannot_override_governance: true
+  autonomy_cannot_change_its_own_contract: true
+
+# -------------------------------------------------------------------
+# 9. Failure Semantics
+# -------------------------------------------------------------------
+
+failure_policy:
+
+  on_violation:
+    action: halt_execution
+    state: ESCALATE
+
+  on_noise:
+    action: auto_correct
+
+  on_ambiguity:
+    action: ESCALATE
+
+# -------------------------------------------------------------------
+# 10. Signature
+# -------------------------------------------------------------------
+
+signature: >
+  Autonomy is granted only within explicit bounds.
+  Silence, correction, and continuation are valid outcomes.
+  Asking when not required is a failure.
