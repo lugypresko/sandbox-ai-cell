@@ -36,3 +36,12 @@ Milestone 5 -- Hygiene and Enforcement
 
 Tests run locally:
 - python -m pytest -p no:cacheprovider
+
+## Autonomy Advisory Mode (v0.1)
+
+Baseline contract:
+- `governance/autonomy/execution_contract.yaml`
+
+Advisory-only checks:
+- `scripts/validate_autonomy.py`
+- CI job `autonomy-advisory`

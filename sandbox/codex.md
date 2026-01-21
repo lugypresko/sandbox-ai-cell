@@ -50,6 +50,11 @@ CODEX must preserve the following structure at a minimum:
 |   |-- POLICY.md
 |   |-- SYSTEM.md
 |   |-- MONITORS.md
+|-- governance/
+|   |-- autonomy/
+|   |   |-- execution_contract.yaml
+|   |-- behavior/
+|   |-- dod/
 |-- src/
 |   |-- sandbox_app/
 |-- tests/
