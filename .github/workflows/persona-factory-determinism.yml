@@ -1,0 +1,20 @@
+name: persona-factory-determinism
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  persona-factory-determinism:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: python -m pip install pyyaml
+      - name: Generate personas
+        run: python experiments/persona_factory_sandbox/generate_personas.py
+      - name: Validate personas
+        run: python experiments/persona_factory_sandbox/validate_personas.py

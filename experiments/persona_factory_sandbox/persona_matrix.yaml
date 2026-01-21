@@ -1,0 +1,31 @@
+﻿version: "0.1"
+
+global_constraints:
+  total_personas: 100
+
+dimensions:
+  seniority:
+    values: [junior, mid, senior]
+
+  domain:
+    values: [backend, frontend, data]
+
+  company_size:
+    values: [small, medium, large]
+
+archetypes:
+  - id: builder
+    weights:
+      seniority: { junior: 0.2, mid: 0.5, senior: 0.3 }
+      domain: { backend: 0.5, frontend: 0.3, data: 0.2 }
+      company_size: { small: 0.4, medium: 0.4, large: 0.2 }
+
+  - id: scaler
+    weights:
+      seniority: { junior: 0.1, mid: 0.4, senior: 0.5 }
+      domain: { backend: 0.6, frontend: 0.1, data: 0.3 }
+      company_size: { small: 0.2, medium: 0.5, large: 0.3 }
+
+validation_rules:
+  require_all_dimensions_present: true
+  allow_empty_segments: false
