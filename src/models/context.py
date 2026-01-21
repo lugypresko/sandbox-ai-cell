@@ -31,3 +31,14 @@ class StateTransition(BaseModel):
     to_state: SystemState
     at_index: int = Field(..., ge=0)
     reason: str
+
+
+class DecisionContext(BaseModel):
+    model_config = ConfigDict(frozen=True, strict=True)
+
+    decision: "Decision"
+    drift_level: DriftLevel
+    drift_metrics: DriftMetrics
+
+
+from .decisions import Decision  # noqa: E402
