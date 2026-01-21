@@ -1,39 +1,42 @@
 version: '3.8'
 
 services:
-  # המציאות: השירותים שיוצרים נתונים
   app-service:
-    build: 
+    build:
       context: .
       dockerfile: Dockerfile.sandbox
     environment:
+      - ROLE=app
       - SERVICE_NAME=user-facing
       - DEPENDENCY_URL=http://dependency-api:8000
+      - LATENCY_MS=50
     ports:
       - "8001:8000"
+    depends_on:
+      - dependency-api
 
   dependency-api:
     build:
       context: .
       dockerfile: Dockerfile.sandbox
     environment:
+      - ROLE=dependency
       - SERVICE_NAME=downstream-db
-    # כאן נוכל להזריק השהיות (Drift) דרך סקריפטים חיצוניים
+      - LATENCY_MS=100
 
-  # הצנרת: OTel Collector
   otel-collector:
     image: otel/opentelemetry-collector:latest
     volumes:
       - ./sandbox/otel-config.yaml:/etc/otel-config.yaml
     command: ["--config=/etc/otel-config.yaml"]
 
-  # המוח: AI-CELL Engine
   ai-cell-engine:
     build:
       context: .
       dockerfile: Dockerfile.engine
     volumes:
       - ./src:/app/src
+      - ./sandbox/artifacts:/var/log/ai-cell
     environment:
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
       - OPENAI_API_KEY=${OPENAI_API_KEY}
