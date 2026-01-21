@@ -1,0 +1,8 @@
+repos:
+  - repo: local
+    hooks:
+      - id: docs-ascii-utf8
+        name: Enforce ASCII-safe UTF-8 docs
+        entry: python scripts/check_docs.py
+        language: system
+        files: \\.md$
