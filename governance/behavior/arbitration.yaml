@@ -1,0 +1,13 @@
+version: "1.2"
+
+priority_order:
+  - CONTEXT_SHIFT
+  - BLOCKED
+  - FALSE_RECOVERY
+  - BOILING_FROG
+  - BOILING_JITTER
+
+rules:
+  - name: context_wins_all
+    description: >
+      If Context Shift is detected, all other scenarios are suppressed.

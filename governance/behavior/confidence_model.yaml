@@ -1,0 +1,28 @@
+version: "1.2"
+
+inputs:
+  temporal_evidence:
+    - duration_minutes
+    - consecutive_windows
+    - continuity_score
+
+  pattern_stability:
+    - variance
+    - monotonicity
+    - oscillation_score
+
+  correlation:
+    - context_event_detected
+    - correlation_score
+
+  historical:
+    - similarity_score
+
+rules:
+  - name: context_shift_override
+    condition: correlation_score >= 0.8
+    effect: force_silent_confident
+
+prohibitions:
+  - source: LLM
+    reason: nondeterministic
